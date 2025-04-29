@@ -1,0 +1,134 @@
+Project Title:
+
+Interactive AI Stock Strategy Builder and Backtester
+Description:
+
+Build a full-stack MVP app that lets users interact with an AI agent to generate stock trading strategies based on natural language prompts, tinker with the strategy parameters, run backtests, optimize strategies using AI, and save strategies to their personal library.
+The system should support anonymous user sessions now and be easily upgradeable later to Firebase Authentication and Firestore database storage.
+
+Required Core Features:
+
+Natural Language Strategy Prompting
+Users can input casual or professional prompts (e.g., "safe growth", "wild tech play", "dividend strategy").
+The system interprets these prompts into structured fields (goal, risk level, time horizon, style, special instructions).
+Intent Parser Module
+Use OpenAI API (gpt-4o) to parse user prompts into structured intent (JSON output).
+AI Strategy Generator
+Generate 3 backtestable stock trading strategies based on parsed fields.
+Each strategy should include:
+Strategy Name
+Short Description
+Entry Rules
+Exit Rules
+Risk Management Rules
+Target Stock Types
+Expected Behavior
+Output as JSON for easy frontend rendering.
+Strategy Card Display
+Display the 3 generated strategies on the homepage as individual cards.
+Allow users to select a strategy for further tinkering.
+Tinker Mode (Parameter Adjustment)
+After selecting a strategy, users can adjust parameters like moving averages, stop loss %, take profit %, etc.
+User can pick which stock to backtest on (enter a ticker manually).
+Build a form-based UI for tweaking and running new backtests.
+Backtesting Engine
+Use TwelveData API to fetch up to 5 years of historical stock data.
+Simple backtesting based on provided parameters.
+Calculate and display:
+Total Return
+CAGR
+Sharpe Ratio
+Max Drawdown
+Win Rate
+Number of Trades
+AI Optimization Feature
+Allow users to request AI optimization of their parameters to maximize Sharpe ratio or minimize drawdown.
+Return optimized parameters in JSON and update the tinker form dynamically.
+Save Strategy Feature
+Allow users to save customized, backtested strategies to their personal library.
+Save strategy name, parameters, backtest results, and timestamp.
+User Strategy Library
+Provide a page where users can view all their saved strategies.
+Show strategy details, performance metrics, and date saved.
+Multi-User Session Support
+Automatically create a unique anonymous user ID (uuid) at session start.
+Save and load strategies per user session.
+Prepare system to easily swap to Firebase Authentication and Firestore database later.
+Backend Architecture Requirements:
+
+Flask server handling:
+Prompt parsing
+Strategy generation
+Backtest execution
+Saving strategies
+Loading saved strategies
+Modular structure:
+/backend/intent_parser.py
+/backend/ai_agent.py
+/backend/backtester.py
+/backend/data_fetcher.py
+/backend/strategy_store.py
+Environment variables for API keys (.env)
+Secure API key handling using python-dotenv
+Frontend Structure Requirements:
+
+Static HTML/CSS/JS (separate /static/ folder)
+/templates/index.html (Prompt entry + Strategy Cards view)
+/templates/strategy_detail.html (Tinker and Backtest page)
+/templates/user_library.html (Saved strategies library)
+Dynamic frontend updates using JavaScript fetch calls
+Clear UX flow:
+Input prompt → See 3 strategies → Pick 1 → Tinker → Backtest → Save → Library
+External APIs:
+
+OpenAI API: For natural language parsing and strategy generation.
+TwelveData API: For fetching stock historical data (5 years).
+Quality Requirements:
+
+Clear modular Python code with comments
+Frontend organized with simple, clean CSS
+Secure storage of API keys
+Easily expandable backend for Firebase migration
+Error handling for API failures and user input mistakes
+Data saved even if users leave/reload browser (simple session cookies)
+Stretch Features (if time allows):
+
+Strategy sharing to a public gallery ("Strategy Hall")
+Badges and achievements for users who tinker and backtest a lot
+Visual equity curve charts for strategies
+Import/export strategies to JSON
+📂 Suggested File and Folder Layout:
+
+/strategy-builder/
+    /backend/
+        ai_agent.py
+        backtester.py
+        data_fetcher.py
+        intent_parser.py
+        strategy_store.py
+    /static/
+        /css/
+            style.css
+        /js/
+            app.js
+            tinker.js
+    /templates/
+        index.html
+        strategy_detail.html
+        user_library.html
+    app.py
+    requirements.txt
+    README.md
+    .env
+    /data/
+        all_strategies.json
+        user_strategies.json
+✨ Bonus Tips for Developer(s):
+
+Keep a simple debug mode (show parsed intents visibly on the frontend)
+Add lots of small wins for the user (loading messages, success alerts, badges later)
+Code "small and clean" now so Firebase scaling is just a data source swap later
+🚀 Quick Reminder: APIs You’ll Need:
+
+OpenAI API
+TwelveData API
