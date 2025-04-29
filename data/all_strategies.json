@@ -379,5 +379,188 @@
       }
     },
     "id": "0eabab37-719a-415c-a146-e7dd7670ca2e"
+  },
+  {
+    "strategy_name": "Stochastic Momentum Swing",
+    "description": "This strategy uses stochastic oscillators to identify and capture short-term momentum swings in the market, capitalizing on rapid price movements towards overbought or oversold conditions.",
+    "entry_rules": [
+      "Enter a long position when the stochastic %K line crosses above the %D line below the 20 level, indicating an oversold reversal.",
+      "Enter a short position when the stochastic %K line crosses below the %D line above the 80 level, indicating an overbought reversal.",
+      "Ensure the stock has an ADX value above 25 to confirm a strong trend direction."
+    ],
+    "exit_rules": [
+      "Exit long position when the stochastic %K line crosses below the %D line above the 80 level, indicating a potential reversal from overbought levels.",
+      "Exit short position when the stochastic %K line crosses above the %D line below the 20 level, indicating a potential reversal from oversold levels.",
+      "Close the position if the price movement achieves a profit target of 5%."
+    ],
+    "risk_management": {
+      "stop_loss": "Set a stop loss at 3% below/above the entry price for long/short positions.",
+      "position_sizing": "Allocate no more than 5% of the total portfolio for a single position to manage the risk."
+    },
+    "target_stocks": "Highly liquid stocks with a daily trading volume exceeding 1 million shares and moderate volatility.",
+    "expected_behavior": "The strategy is expected to perform well in trending markets where stocks exhibit strong momentum patterns. It may underperform during sideways or choppy market conditions.",
+    "parameters": {
+      "stoch_k_period": {
+        "default": 14,
+        "min": 5,
+        "max": 21,
+        "step": 1
+      },
+      "stoch_d_period": {
+        "default": 3,
+        "min": 1,
+        "max": 5,
+        "step": 1
+      },
+      "adx_threshold": {
+        "default": 25,
+        "min": 20,
+        "max": 40,
+        "step": 1
+      },
+      "profit_target_percentage": {
+        "default": 5,
+        "min": 3,
+        "max": 10,
+        "step": 0.5
+      },
+      "stop_loss_percentage": {
+        "default": 3,
+        "min": 2,
+        "max": 5,
+        "step": 0.5
+      },
+      "max_position_size_percentage": {
+        "default": 5,
+        "min": 2,
+        "max": 10,
+        "step": 1
+      }
+    },
+    "id": "927e0ac8-82be-442e-a6b8-313e397be6e5"
+  },
+  {
+    "strategy_name": "Fast Stochastic Breakout",
+    "description": "A rapid momentum strategy focusing on short-term breakouts using fast stochastic crossovers to capture quick price surges in volatile stocks.",
+    "entry_rules": [
+      "Enter a long position when the fast stochastic %K line crosses above the %D line and both are below the 30 threshold, signaling a breakout from oversold territory.",
+      "Enter a short position when the fast stochastic %K line crosses below the %D line and both are above the 70 threshold, signaling a breakout from overbought territory.",
+      "Confirm trade with a price bar closing above/below a 10-period moving average."
+    ],
+    "exit_rules": [
+      "Exit long positions when the fast stochastic %K line falls back below the %D line above the 70 level.",
+      "Exit short positions when the fast stochastic %K line rises above the %D line below the 30 level.",
+      "Consider closing when the gain hits a 3% profit target."
+    ],
+    "risk_management": {
+      "stop_loss": "Apply a trailing stop loss of 2% to secure profits in trending positions.",
+      "position_sizing": "Don't exceed 4% of total portfolio value per trade to maintain diversification."
+    },
+    "target_stocks": "Stocks with high beta, exhibiting significant daily price swings and ample liquidity.",
+    "expected_behavior": "Expected to excel in highly volatile and swiftly moving markets, especially during earnings periods or unexpected news releases. Performance may decrease in low volatility environments.",
+    "parameters": {
+      "fast_stoch_k_period": {
+        "default": 9,
+        "min": 5,
+        "max": 14,
+        "step": 1
+      },
+      "fast_stoch_d_period": {
+        "default": 3,
+        "min": 1,
+        "max": 5,
+        "step": 1
+      },
+      "ma_period": {
+        "default": 10,
+        "min": 5,
+        "max": 20,
+        "step": 1
+      },
+      "profit_target_percentage": {
+        "default": 3,
+        "min": 2,
+        "max": 6,
+        "step": 0.5
+      },
+      "trailing_stop_loss_percentage": {
+        "default": 2,
+        "min": 1,
+        "max": 5,
+        "step": 0.5
+      },
+      "max_position_size_percentage": {
+        "default": 4,
+        "min": 2,
+        "max": 7,
+        "step": 1
+      }
+    },
+    "id": "38208bf2-7fe5-410e-a155-d8e4dc25fefe"
+  },
+  {
+    "strategy_name": "Stochastic Cross Momentum Surge",
+    "description": "This strategy combines stochastic crossovers with volume surges to identify entry points during moments of heightened buy/sell pressure, promising significant momentum opportunities.",
+    "entry_rules": [
+      "Open a long position when the stochastic %K line crosses over the %D line from below 20, paired with a volume spike above its 20-day average by 50%.",
+      "Open a short position when the stochastic %K crosses below the %D line from above 80 with similar volume conditions signaling intense selling pressure.",
+      "Ensure the overall trend aligns with entry signals by checking a 21-period EMA trend direction."
+    ],
+    "exit_rules": [
+      "Close long positions when stochastic %K dips under the %D line above 80.",
+      "Exit short positions as %K crosses over %D below 20.",
+      "Set a time-based exit after 5 days of trade initiation if profit target isn't reached."
+    ],
+    "risk_management": {
+      "stop_loss": "Implement a hard stop loss at 3.5% from the entry point.",
+      "position_sizing": "Cap position size at 4% per trade for balanced risk exposure."
+    },
+    "target_stocks": "Mid-cap stocks with sufficient trading volume and prone to significant news-driven movements.",
+    "expected_behavior": "Designed to capitalize on sudden market developments, the strategy thrives during uncertain markets, driven by news or earnings. May see suboptimal results in calm, non-volatile settings.",
+    "parameters": {
+      "stoch_k_period": {
+        "default": 14,
+        "min": 10,
+        "max": 20,
+        "step": 1
+      },
+      "stoch_d_period": {
+        "default": 3,
+        "min": 1,
+        "max": 5,
+        "step": 1
+      },
+      "volume_spike_threshold": {
+        "default": 1.5,
+        "min": 1.2,
+        "max": 2.0,
+        "step": 0.1
+      },
+      "ema_trend_period": {
+        "default": 21,
+        "min": 15,
+        "max": 30,
+        "step": 1
+      },
+      "time_exit_days": {
+        "default": 5,
+        "min": 2,
+        "max": 10,
+        "step": 1
+      },
+      "stop_loss_percentage": {
+        "default": 3.5,
+        "min": 2,
+        "max": 5,
+        "step": 0.5
+      },
+      "max_position_size_percentage": {
+        "default": 4,
+        "min": 3,
+        "max": 7,
+        "step": 1
+      }
+    },
+    "id": "3d1e3101-826d-414f-9b75-1cea9c6d2f55"
   }
 ]

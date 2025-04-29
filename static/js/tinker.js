@@ -476,6 +476,15 @@ document.addEventListener('DOMContentLoaded', function() {
         metricWinrate.textContent = `${results.metrics.win_rate}%`;
         metricTrades.textContent = results.metrics.num_trades;
         
+        // Add Buy and Hold comparison metric if available
+        if (results.metrics.vs_buy_hold !== undefined) {
+            const vsBuyHoldElement = document.getElementById('metric-vs-buy-hold');
+            if (vsBuyHoldElement) {
+                vsBuyHoldElement.textContent = `${results.metrics.vs_buy_hold}%`;
+                vsBuyHoldElement.className = results.metrics.vs_buy_hold >= 0 ? 'text-success' : 'text-danger';
+            }
+        }
+        
         // Color-code metrics
         metricTotalReturn.className = results.metrics.total_return >= 0 ? 'text-success' : 'text-danger';
         metricCagr.className = results.metrics.cagr >= 0 ? 'text-success' : 'text-danger';
@@ -483,8 +492,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // Update trade history
         populateTradeHistory(results.trades);
         
-        // Update equity chart
-        createEquityChart(results.portfolio_values, results.dates);
+        // Update equity chart with buy and hold comparison
+        createEquityChartWithBuyHold(results.portfolio_values, results.buy_hold_values, results.dates);
         
         // Show results
         hideBacktestLoading();
@@ -535,8 +544,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Create equity chart
-    function createEquityChart(portfolioValues, dates) {
+    // Create equity chart with buy and hold comparison
+    function createEquityChartWithBuyHold(portfolioValues, buyHoldValues, dates) {
         // Convert dates for chart if they exist
         const chartLabels = dates || portfolioValues.map((_, i) => `Day ${i+1}`);
         
@@ -548,19 +557,37 @@ document.addEventListener('DOMContentLoaded', function() {
         // Get chart context
         const ctx = document.getElementById('equity-chart').getContext('2d');
         
+        // Datasets configuration
+        const datasets = [
+            {
+                label: 'Strategy Performance',
+                data: portfolioValues,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                tension: 0.1,
+                fill: true
+            }
+        ];
+        
+        // Add buy and hold dataset if available
+        if (buyHoldValues && buyHoldValues.length) {
+            datasets.push({
+                label: 'Buy & Hold',
+                data: buyHoldValues,
+                borderColor: 'rgba(255, 159, 64, 1)',
+                backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                tension: 0.1,
+                fill: false,
+                borderDash: [5, 5]
+            });
+        }
+        
         // Create chart
         equityChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: chartLabels,
-                datasets: [{
-                    label: 'Portfolio Value',
-                    data: portfolioValues,
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                    tension: 0.1,
-                    fill: true
-                }]
+                datasets: datasets
             },
             options: {
                 responsive: true,
@@ -597,6 +624,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
+    }
+    
+    // Legacy function for compatibility
+    function createEquityChart(portfolioValues, dates) {
+        createEquityChartWithBuyHold(portfolioValues, null, dates);
     }
     
     // Show loading state for backtest

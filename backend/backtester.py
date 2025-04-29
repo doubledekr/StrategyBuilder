@@ -95,6 +95,18 @@ def run_backtest(stock_data, strategy_params):
     # Calculate performance metrics
     metrics = calculate_performance_metrics(portfolio_values, trades)
     
+    # Calculate buy and hold performance
+    buy_hold_values = calculate_buy_hold_performance(prices)
+    buy_hold_metrics = calculate_performance_metrics(buy_hold_values, [])
+    
+    # Calculate strategy vs buy and hold
+    strategy_return = metrics['total_return']
+    buy_hold_return = buy_hold_metrics['total_return']
+    outperformance = strategy_return - buy_hold_return
+    
+    # Add outperformance to metrics
+    metrics['vs_buy_hold'] = round(outperformance, 2)
+    
     # Prepare the response
     results = {
         'ticker': ticker,
@@ -102,10 +114,14 @@ def run_backtest(stock_data, strategy_params):
         'end_date': dates[-1] if dates else None,
         'trades': trades,
         'portfolio_values': portfolio_values,
-        'metrics': metrics
+        'metrics': metrics,
+        'buy_hold_values': buy_hold_values,
+        'buy_hold_metrics': buy_hold_metrics
     }
     
     logger.debug(f"Backtest completed with {len(trades)} trades and final value: {portfolio_values[-1]}")
+    logger.debug(f"Buy and hold final value: {buy_hold_values[-1]}")
+    logger.debug(f"Strategy vs Buy and Hold: {outperformance}%")
     return results
 
 def calculate_indicators(prices, params):
@@ -419,6 +435,31 @@ def check_exit_conditions(index, prices, indicators, params, position, current_p
                 return True
     
     return False
+
+def calculate_buy_hold_performance(prices):
+    """
+    Calculate the performance of a buy and hold strategy.
+    
+    Args:
+        prices (list): Historical prices
+        
+    Returns:
+        list: Daily portfolio values for buy and hold
+    """
+    if not prices or len(prices) < 2:
+        return [1.0]
+    
+    # Initialize with $1 normalized
+    initial_price = prices[0]
+    shares = 1.0 / initial_price
+    
+    # Calculate daily values
+    buy_hold_values = [shares * price for price in prices]
+    
+    # Normalize to start at 1.0
+    buy_hold_values = [value / buy_hold_values[0] for value in buy_hold_values]
+    
+    return buy_hold_values
 
 def calculate_performance_metrics(portfolio_values, trades):
     """
