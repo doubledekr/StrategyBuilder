@@ -135,6 +135,11 @@ def save_user_strategy():
 def user_library():
     user_id = session['user_id']
     strategies = get_user_strategies(user_id)
+    
+    # Check if JSON format is requested
+    if request.args.get('format') == 'json':
+        return jsonify(strategies)
+    
     return render_template('user_library.html', strategies=strategies)
 
 @app.route('/search_stock', methods=['GET'])

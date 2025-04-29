@@ -1,1 +1,383 @@
-[]
+[
+  {
+    "strategy_name": "Tech Leap Momentum",
+    "description": "This strategy identifies and rides momentum in mid-cap tech stocks using a fast-moving average crossover system with volatility breakout confirmation to minimize drawdowns.",
+    "entry_rules": [
+      "10-day EMA crosses above the 50-day EMA.",
+      "Average True Range (ATR) of the last 10 days increases by at least 25% from the 20-day average ATR.",
+      "RSI (14) is below 70 to ensure that the stock is not overbought."
+    ],
+    "exit_rules": [
+      "10-day EMA crosses below the 50-day EMA.",
+      "RSI (14) crosses above 80.",
+      "The stock falls below the 20-day low."
+    ],
+    "risk_management": {
+      "stop_loss": "10% below the entry price",
+      "position_sizing": "Risk no more than 2% of total equity on any single trade",
+      "trailing_stop": "5% below the highest closing price since entry"
+    },
+    "target_stocks": "Mid-cap tech stocks with a history of strong price trends and sufficient liquidity",
+    "expected_behavior": "The strategy is expected to perform well in trending markets and minimize losses during pullbacks and consolidations.",
+    "parameters": {
+      "ema_fast_period": {
+        "default": 10,
+        "min": 5,
+        "max": 50,
+        "step": 1
+      },
+      "ema_slow_period": {
+        "default": 50,
+        "min": 20,
+        "max": 200,
+        "step": 1
+      },
+      "atr_confirm_period": {
+        "default": 10,
+        "min": 5,
+        "max": 20,
+        "step": 1
+      },
+      "atr_breakout_factor": {
+        "default": 1.25,
+        "min": 1,
+        "max": 2,
+        "step": 0.05
+      },
+      "rsi_period": {
+        "default": 14,
+        "min": 5,
+        "max": 30,
+        "step": 1
+      },
+      "rsi_overbought": {
+        "default": 70,
+        "min": 50,
+        "max": 90,
+        "step": 1
+      },
+      "stop_loss_percent": {
+        "default": 10,
+        "min": 5,
+        "max": 15,
+        "step": 0.5
+      },
+      "trailing_stop_percent": {
+        "default": 5,
+        "min": 3,
+        "max": 10,
+        "step": 0.5
+      }
+    },
+    "id": "23c34331-0302-44e6-afae-618509465bf5"
+  },
+  {
+    "strategy_name": "Momentum Retracement Surfer",
+    "description": "This strategy aims to capture momentum bursts in leading tech stocks by entering on short-term pullbacks within an uptrend to minimize risk while maximizing upside potential.",
+    "entry_rules": [
+      "Price is above the 50-day SMA, indicating a long-term uptrend.",
+      "Price retraces to the 20-day SMA, but does not close below the average for more than 2 consecutive days.",
+      "Stochastic Oscillator (14,3,3) crosses back above 20 from below, signaling potential bullish reversal."
+    ],
+    "exit_rules": [
+      "Price closes below the 20-day SMA for 3 consecutive days.",
+      "Stochastic Oscillator (14,3,3) crosses above 80, then back below, suggesting fading momentum.",
+      "Price hits a 10% profit target from the entry point."
+    ],
+    "risk_management": {
+      "stop_loss": "5% below the last swing low before entry",
+      "position_sizing": "Allocate 3% of portfolio to any single trade",
+      "profit_targets": "Layered sell strategy with 50% at 5% profit and the rest at 10%."
+    },
+    "target_stocks": "Large-cap tech stocks that are leaders in their sectors with high liquidity and volatility.",
+    "expected_behavior": "Efficient in capturing momentum gains during bullish market conditions and effective at mitigating losses through tight stop losses and profit-taking.",
+    "parameters": {
+      "sma_long_term": {
+        "default": 50,
+        "min": 20,
+        "max": 200,
+        "step": 1
+      },
+      "sma_short_term": {
+        "default": 20,
+        "min": 10,
+        "max": 50,
+        "step": 1
+      },
+      "stochastic_k": {
+        "default": 14,
+        "min": 5,
+        "max": 21,
+        "step": 1
+      },
+      "stochastic_d": {
+        "default": 3,
+        "min": 1,
+        "max": 5,
+        "step": 1
+      },
+      "stochastic_smooth": {
+        "default": 3,
+        "min": 1,
+        "max": 5,
+        "step": 1
+      },
+      "profit_target_percent": {
+        "default": 10,
+        "min": 5,
+        "max": 20,
+        "step": 1
+      },
+      "stop_loss_swing": {
+        "default": 5,
+        "min": 3,
+        "max": 10,
+        "step": 0.5
+      }
+    },
+    "id": "5d441f84-cf17-48eb-b4e2-795c3e8c3237"
+  },
+  {
+    "strategy_name": "Tech Glide Slope",
+    "description": "Focus on minimizing drawdowns while capturing upside in tech stocks by using momentum trend lines and Fibonacci retracement levels for strategic entry and exit points.",
+    "entry_rules": [
+      "Price is above a rising trend line drawn from 20-day lows.",
+      "A retracement to the 38.2% Fibonacci level from a recent swing low swing high pair, bouncing back with a higher low confirmation.",
+      "MACD line crosses above the signal line and is above the zero line."
+    ],
+    "exit_rules": [
+      "Price breaks and closes below the trend line.",
+      "A retracement hits beyond the 61.8% Fibonacci level and does not recover the 38.2% level quickly.",
+      "MACD line crosses below the signal line reversing the positive momentum."
+    ],
+    "risk_management": {
+      "stop_loss": "8% below the entry price or below the most recent swing low.",
+      "position_sizing": "Limit each trade to 2% of account capital.",
+      "Fibonacci levels": "Secondary exit if a position retraces to 50% or below without recovery."
+    },
+    "target_stocks": "Volatile tech stocks experiencing medium-term uptrends, preferable with recent pullbacks for potential entry.",
+    "expected_behavior": "Designed to work well in trending market environments, with strategies in place to limit exposure during unanticipated reversals or stagnation.",
+    "parameters": {
+      "trend_lookback_period": {
+        "default": 20,
+        "min": 10,
+        "max": 60,
+        "step": 1
+      },
+      "macd_fast": {
+        "default": 12,
+        "min": 5,
+        "max": 15,
+        "step": 1
+      },
+      "macd_slow": {
+        "default": 26,
+        "min": 15,
+        "max": 30,
+        "step": 1
+      },
+      "macd_signal": {
+        "default": 9,
+        "min": 5,
+        "max": 10,
+        "step": 1
+      },
+      "fib_retrace_level1": {
+        "default": 38.2,
+        "min": 23.6,
+        "max": 50,
+        "step": 0.1
+      },
+      "fib_retrace_level2": {
+        "default": 61.8,
+        "min": 50,
+        "max": 78.6,
+        "step": 0.1
+      },
+      "stop_loss_percent": {
+        "default": 8,
+        "min": 5,
+        "max": 15,
+        "step": 0.5
+      }
+    },
+    "id": "5b54b43d-0645-4ae9-9c09-69def485f5db"
+  },
+  {
+    "strategy_name": "Stochastic Surge",
+    "description": "This momentum strategy seeks to capture short-term price movements by using the stochastic oscillator to identify overbought and oversold conditions in high-risk, high-reward stocks.",
+    "entry_rules": [
+      "Enter long when the stochastic %K crosses above %D from below the oversold threshold (typically 20).",
+      "Ensure the underlying stock volume is above the average 10-day volume to confirm strong momentum.",
+      "Confirm that the stock's price is above both its 10-day and 50-day moving average."
+    ],
+    "exit_rules": [
+      "Exit the position when the stochastic %K crosses below %D from above the overbought threshold (typically 80).",
+      "Take profit if the price reaches a predefined profit target, such as 2% above the entry price.",
+      "Exit the trade if the stock's price closes below the 10-day moving average."
+    ],
+    "risk_management": {
+      "stop_loss": "Set a stop loss at 1% below the entry price.",
+      "position_sizing": "Allocate no more than 5% of total portfolio value to a single trade."
+    },
+    "target_stocks": "Volatile, high-volume stocks with strong recent price momentum.",
+    "expected_behavior": "This strategy should perform well in trending markets but may suffer in extremely volatile or sideways markets.",
+    "parameters": {
+      "stochastic_k_period": {
+        "default": 14,
+        "min": 5,
+        "max": 30,
+        "step": 1
+      },
+      "stochastic_d_period": {
+        "default": 3,
+        "min": 1,
+        "max": 10,
+        "step": 1
+      },
+      "stochastic_overbought": {
+        "default": 80,
+        "min": 71,
+        "max": 95,
+        "step": 1
+      },
+      "stochastic_oversold": {
+        "default": 20,
+        "min": 5,
+        "max": 30,
+        "step": 1
+      },
+      "profit_target": {
+        "default": 2,
+        "min": 1,
+        "max": 5,
+        "step": 0.5
+      },
+      "stop_loss_percentage": {
+        "default": 1,
+        "min": 0.5,
+        "max": 3,
+        "step": 0.1
+      }
+    },
+    "id": "c21d3d76-2ad0-48c7-97c8-110ceab10302"
+  },
+  {
+    "strategy_name": "Momentum Oscillator Dip",
+    "description": "This strategy leverages stochastic indicators to buy during short-term pullbacks in strong momentum stocks, aiming to catch a continuation of the trend.",
+    "entry_rules": [
+      "Enter long when stochastic %K falls below 40 and then crosses back above %D, indicating a dip in a continuing uptrend.",
+      "Price must be above its 50-day moving average to confirm the continuation of the uptrend.",
+      "Confirm an uptick in trading volume (at least 1.5 times the 10-day average) before entry."
+    ],
+    "exit_rules": [
+      "Exit if the stochastic %K crosses below %D above the 70 level, indicating a potential reversal.",
+      "Take profit automatically if stock price reaches a 3% increase from entry.",
+      "Exit position if the stock closes 1% below its 50-day moving average."
+    ],
+    "risk_management": {
+      "stop_loss": "Set a stop loss at 1.5% below the entry point.",
+      "position_sizing": "Limit position size to 4% of total portfolio value."
+    },
+    "target_stocks": "Momentum stocks that frequently show short-term dips and recoveries.",
+    "expected_behavior": "Expected to do well in bullish markets and less effective in choppy or bearish conditions.",
+    "parameters": {
+      "stochastic_k_period": {
+        "default": 14,
+        "min": 7,
+        "max": 20,
+        "step": 1
+      },
+      "stochastic_d_period": {
+        "default": 3,
+        "min": 1,
+        "max": 5,
+        "step": 1
+      },
+      "max_dip_level": {
+        "default": 40,
+        "min": 30,
+        "max": 50,
+        "step": 1
+      },
+      "upper_exit_level": {
+        "default": 70,
+        "min": 60,
+        "max": 90,
+        "step": 1
+      },
+      "profit_target": {
+        "default": 3,
+        "min": 1,
+        "max": 10,
+        "step": 0.5
+      },
+      "stop_loss_percentage": {
+        "default": 1.5,
+        "min": 0.5,
+        "max": 4,
+        "step": 0.1
+      }
+    },
+    "id": "077dee37-47bc-448d-a81b-fda9397fb40d"
+  },
+  {
+    "strategy_name": "Dual Stochastic Thrust",
+    "description": "This strategy uses two stochastic indicators with different periods to identify and capitalize on strong momentum shifts in the market, providing a unique way to time entries and exits.",
+    "entry_rules": [
+      "Enter long when both a short-term stochastic (%K, %D) and a long-term stochastic cross from below to above their respective oversold thresholds.",
+      "Ensure the shorter period stochastic crosses ahead of the longer period for confirmation of momentum.",
+      "The price should be above the 20-day EMA for confirmation of an upward trend."
+    ],
+    "exit_rules": [
+      "Exit when the short-term stochastic crosses from above to below its overbought threshold.",
+      "Sell if a reversal is confirmed by a cross back below of the short-term stochastic %K below %D.",
+      "Exit upon hitting a trailing stop of 2% from the peak price."
+    ],
+    "risk_management": {
+      "stop_loss": "Apply a stop loss at 2% below the entry price.",
+      "position_sizing": "Do not exceed 6% of the total portfolio in any one position."
+    },
+    "target_stocks": "Stocks in sectors with high volatility and strong directional movement.",
+    "expected_behavior": "This strategy will likely thrive in markets characterized by strong trends, while potentially underperforming in range-bound conditions.",
+    "parameters": {
+      "short_stochastic_k_period": {
+        "default": 9,
+        "min": 5,
+        "max": 15,
+        "step": 1
+      },
+      "short_stochastic_d_period": {
+        "default": 3,
+        "min": 1,
+        "max": 5,
+        "step": 1
+      },
+      "long_stochastic_k_period": {
+        "default": 21,
+        "min": 15,
+        "max": 30,
+        "step": 1
+      },
+      "long_stochastic_d_period": {
+        "default": 5,
+        "min": 3,
+        "max": 10,
+        "step": 1
+      },
+      "trailing_stop": {
+        "default": 2,
+        "min": 1,
+        "max": 5,
+        "step": 0.5
+      },
+      "stop_loss_percentage": {
+        "default": 2,
+        "min": 0.5,
+        "max": 5,
+        "step": 0.1
+      }
+    },
+    "id": "0eabab37-719a-415c-a146-e7dd7670ca2e"
+  }
+]
