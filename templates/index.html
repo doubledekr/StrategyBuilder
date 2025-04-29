@@ -1,0 +1,223 @@
+{% extends "layout.html" %}
+
+{% block title %} - Home{% endblock %}
+
+{% block content %}
+<div class="hero-section mb-5">
+    <div class="row align-items-center">
+        <div class="col-lg-6">
+            <h1 class="display-5 fw-bold mb-3">Build AI-Powered Trading Strategies</h1>
+            <p class="lead mb-4">Describe your investment goals in plain language, and let our AI generate customizable trading strategies that you can backtest and optimize.</p>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                <a href="#strategy-builder" class="btn btn-primary btn-lg px-4 me-md-2">Get Started</a>
+                <a href="{{ url_for('user_library') }}" class="btn btn-outline-secondary btn-lg px-4">My Strategies</a>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="hero-image-container">
+                <img src="https://images.unsplash.com/photo-1554260570-e9689a3418b8" alt="Stock market charts" class="img-fluid rounded shadow-lg">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="strategy-builder" class="mb-5">
+    <div class="card bg-dark shadow-sm">
+        <div class="card-body p-4">
+            <h2 class="card-title mb-4">Generate Trading Strategies</h2>
+            <p class="card-text mb-4">Describe your ideal trading strategy in plain English. For example:</p>
+            
+            <div class="mb-4 example-prompts">
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <button class="btn btn-outline-info w-100 example-prompt-btn" data-prompt="I want a low-risk dividend strategy for retirement">
+                            Low-risk dividend strategy
+                        </button>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <button class="btn btn-outline-info w-100 example-prompt-btn" data-prompt="A momentum strategy focused on tech stocks that minimizes drawdowns">
+                            Tech momentum strategy
+                        </button>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <button class="btn btn-outline-info w-100 example-prompt-btn" data-prompt="Aggressive growth strategy for small caps with high volatility">
+                            Aggressive small cap strategy
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <form id="promptForm">
+                <div class="mb-3">
+                    <textarea class="form-control" id="userPrompt" rows="3" placeholder="Describe your trading strategy..."></textarea>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary" id="generateBtn">
+                        <i class="fas fa-robot me-2"></i>Generate Strategies
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="parsed-intent-container" class="mb-5" style="display: none;">
+    <div class="card bg-dark shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="m-0">Understanding Your Request</h3>
+            <button class="btn btn-sm btn-outline-secondary" id="editPromptBtn">
+                <i class="fas fa-edit me-1"></i>Edit
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8">
+                    <p id="intent-summary" class="lead"></p>
+                </div>
+                <div class="col-md-4">
+                    <div class="intent-details">
+                        <div class="mb-2">
+                            <span class="badge bg-info">Goal:</span>
+                            <span id="intent-goal"></span>
+                        </div>
+                        <div class="mb-2">
+                            <span class="badge bg-info">Risk Level:</span>
+                            <span id="intent-risk-level"></span>
+                        </div>
+                        <div class="mb-2">
+                            <span class="badge bg-info">Time Horizon:</span>
+                            <span id="intent-time-horizon"></span>
+                        </div>
+                        <div class="mb-2">
+                            <span class="badge bg-info">Style:</span>
+                            <span id="intent-style"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="loading-container" style="display: none;">
+    <div class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <h3 class="mt-3" id="loading-message">Generating strategies...</h3>
+        <p class="text-muted" id="loading-substatus">Analyzing market patterns</p>
+    </div>
+</div>
+
+<div id="strategies-container" class="mb-5" style="display: none;">
+    <h2 class="mb-4">Your AI-Generated Strategies</h2>
+    <div class="row" id="strategy-cards">
+        <!-- Strategy cards will be inserted here -->
+    </div>
+</div>
+
+<div class="features-section mb-5">
+    <h2 class="mb-4">How It Works</h2>
+    <div class="row">
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 bg-dark shadow-sm">
+                <div class="card-body text-center">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-comments fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">Describe</h5>
+                    <p class="card-text">Tell the AI about your investment goals in plain language</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 bg-dark shadow-sm">
+                <div class="card-body text-center">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-robot fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">Generate</h5>
+                    <p class="card-text">AI creates practical trading strategies tailored to your needs</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 bg-dark shadow-sm">
+                <div class="card-body text-center">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-sliders-h fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">Customize</h5>
+                    <p class="card-text">Tinker with strategy parameters to match your preferences</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 bg-dark shadow-sm">
+                <div class="card-body text-center">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-chart-line fa-3x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">Backtest</h5>
+                    <p class="card-text">Test your strategy against real historical market data</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="about-section mb-5">
+    <div class="row">
+        <div class="col-lg-6">
+            <h2 class="mb-4">About This Tool</h2>
+            <p>The AI Stock Strategy Builder combines cutting-edge artificial intelligence with financial analysis to democratize algorithmic trading strategy development.</p>
+            <p>Unlike traditional strategy builders that require coding knowledge, our tool translates natural language descriptions into fully functional trading strategies.</p>
+            <p>All strategies are backtested against real historical data, giving you insights into how they would have performed in past market conditions.</p>
+        </div>
+        <div class="col-lg-6">
+            <img src="https://images.unsplash.com/photo-1638825988283-39e5408b75e8" alt="Financial trading concept" class="img-fluid rounded shadow-lg">
+        </div>
+    </div>
+</div>
+
+<!-- Strategy card template (hidden) -->
+<template id="strategy-card-template">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 bg-dark shadow-sm strategy-card">
+            <div class="card-header">
+                <h5 class="card-title strategy-name mb-0"></h5>
+            </div>
+            <div class="card-body">
+                <p class="card-text strategy-description"></p>
+                <div class="strategy-details">
+                    <div class="mb-2">
+                        <span class="badge bg-secondary">Entry Rules</span>
+                        <ul class="entry-rules mt-1"></ul>
+                    </div>
+                    <div class="mb-2">
+                        <span class="badge bg-secondary">Exit Rules</span>
+                        <ul class="exit-rules mt-1"></ul>
+                    </div>
+                    <div class="mb-2">
+                        <span class="badge bg-secondary">Risk Management</span>
+                        <ul class="risk-management mt-1"></ul>
+                    </div>
+                    <div class="mb-2">
+                        <span class="badge bg-secondary">Target Stocks</span>
+                        <p class="target-stocks mt-1"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="#" class="btn btn-primary w-100 select-strategy-btn">
+                    Select & Customize
+                </a>
+            </div>
+        </div>
+    </div>
+</template>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+{% endblock %}
