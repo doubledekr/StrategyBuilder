@@ -44,7 +44,7 @@ const BacktestScreen: React.FC = () => {
   };
 
   const portfolioData = {
-    labels: results.dates.filter((_, index) => index % Math.ceil(results.dates.length / 6) === 0),
+    labels: results.dates.filter((_: string, index: number) => index % Math.ceil(results.dates.length / 6) === 0),
     datasets: [
       {
         data: results.portfolio_values,
@@ -127,7 +127,7 @@ const BacktestScreen: React.FC = () => {
 
       <View style={styles.tradesSection}>
         <Text style={styles.sectionTitle}>Recent Trades</Text>
-        {results.trades.slice(-10).map((trade, index) => (
+        {results.trades.slice(-10).map((trade: any, index: number) => (
           <View key={index} style={styles.tradeRow}>
             <View style={styles.tradeInfo}>
               <Text style={styles.tradeDate}>{trade.date}</Text>

@@ -139,7 +139,7 @@ const StrategyDetailScreen: React.FC = () => {
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Exit Conditions</Text>
-        {strategy.exit_conditions?.map((condition, index) => (
+        {strategy.exit_conditions?.map((condition: string, index: number) => (
           <Text key={index} style={styles.conditionText}>• {condition}</Text>
         ))}
       </View>
@@ -162,10 +162,10 @@ const StrategyDetailScreen: React.FC = () => {
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Parameters</Text>
-        {Object.entries(strategy.parameters || {}).map(([key, value]) => (
+        {Object.entries(strategy.parameters || {}).map(([key, value]: [string, any]) => (
           <View key={key} style={styles.detailRow}>
             <Text style={styles.detailLabel}>{key}:</Text>
-            <Text style={styles.detailValue}>{value}</Text>
+            <Text style={styles.detailValue}>{String(value)}</Text>
           </View>
         ))}
       </View>
