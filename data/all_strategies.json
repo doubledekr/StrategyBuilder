@@ -562,5 +562,188 @@
       }
     },
     "id": "3d1e3101-826d-414f-9b75-1cea9c6d2f55"
+  },
+  {
+    "strategy_name": "Dividend Yield Drop Guard",
+    "description": "This strategy focuses on acquiring dividend stocks with a strong history of steady yield while protecting against potential drops. It uses both technical and fundamental analysis to identify reliable income-generating stocks, ideal for a long-term retirement income plan.",
+    "entry_rules": [
+      "Select stocks with a dividend yield above the 5-year average yield for the sector.",
+      "Stock has a price-to-earnings (P/E) ratio less than the sector average by at least 10%.",
+      "The company's earnings per share (EPS) has grown by an average of 3% or more annually over the past 5 years."
+    ],
+    "exit_rules": [
+      "Exit if the dividend yield falls below the historical yield average by more than 25%.",
+      "Sell if the stock's P/E ratio becomes higher than 10% above the sector average.",
+      "Exit if the company's EPS declines by more than 20% year over year."
+    ],
+    "risk_management": {
+      "stop_loss": "Set a stop loss at 15% from the entry price to protect against significant capital loss.",
+      "position_sizing": "Limit any one position to a maximum of 5% of the total portfolio value."
+    },
+    "target_stocks": "Stable, blue-chip dividend stocks with a consistent history of payout and low volatility.",
+    "expected_behavior": "The strategy is expected to perform well in stable and slightly bullish markets by minimizing downside risks and realizing steady income. In bear markets, it may underperform if dividend cuts are widespread.",
+    "parameters": {
+      "dividend_yield_threshold": {
+        "default": 5,
+        "min": 3,
+        "max": 10,
+        "step": 0.5
+      },
+      "pe_ratio_discount": {
+        "default": 10,
+        "min": 5,
+        "max": 20,
+        "step": 1
+      },
+      "eps_growth_5y": {
+        "default": 3,
+        "min": 0,
+        "max": 10,
+        "step": 0.5
+      },
+      "yield_drop_threshold": {
+        "default": 25,
+        "min": 10,
+        "max": 50,
+        "step": 1
+      },
+      "eps_decline_threshold": {
+        "default": 20,
+        "min": 10,
+        "max": 50,
+        "step": 1
+      },
+      "stop_loss_percentage": {
+        "default": 15,
+        "min": 5,
+        "max": 25,
+        "step": 1
+      },
+      "max_position_size": {
+        "default": 5,
+        "min": 1,
+        "max": 10,
+        "step": 0.5
+      }
+    },
+    "id": "bdd07c47-7944-4811-98f9-2c509405d9f6"
+  },
+  {
+    "strategy_name": "Value Dividend Stability",
+    "description": "This strategy seeks undervalued dividend stocks with stable income potential, focusing on financial health and sustainable dividend payouts. It's tailored for investors seeking reliable income with low risk and long-term growth.",
+    "entry_rules": [
+      "Look for stocks with a debt-to-equity ratio under 0.5.",
+      "Select companies with a minimum dividend payout ratio of 30% and maximum of 70%.",
+      "Ensure the current dividend yield is at least 20% higher than the 10-year treasury yield."
+    ],
+    "exit_rules": [
+      "Exit if the debt-to-equity ratio rises above 1.0.",
+      "Sell if the payout ratio goes beyond 75%.",
+      "Exit if dividend cuts occur more than twice in a fiscal year."
+    ],
+    "risk_management": {
+      "stop_loss": "Apply a 10% stop loss to safeguard against unexpected downtrends.",
+      "position_sizing": "Cap individual stock exposure at 4% of the portfolio."
+    },
+    "target_stocks": "Large-cap stocks with strong balance sheets and established dividend histories, typically found in sectors like utilities, consumer staples, and healthcare.",
+    "expected_behavior": "Should outperform in steadily upward or flat markets, preserving capital in downturn conditions due to tight risk management and focus on financially sound enterprises.",
+    "parameters": {
+      "de_ratio_max": {
+        "default": 0.5,
+        "min": 0.1,
+        "max": 1.0,
+        "step": 0.1
+      },
+      "payout_ratio_min": {
+        "default": 30,
+        "min": 20,
+        "max": 50,
+        "step": 1
+      },
+      "payout_ratio_max": {
+        "default": 70,
+        "min": 50,
+        "max": 90,
+        "step": 1
+      },
+      "yield_vs_treasury_threshold": {
+        "default": 20,
+        "min": 10,
+        "max": 50,
+        "step": 1
+      },
+      "stop_loss_percentage": {
+        "default": 10,
+        "min": 5,
+        "max": 20,
+        "step": 1
+      },
+      "max_position_size": {
+        "default": 4,
+        "min": 1,
+        "max": 5,
+        "step": 0.5
+      }
+    },
+    "id": "f719d12a-471d-443a-93c6-f0d6cdba0a5d"
+  },
+  {
+    "strategy_name": "Reliable Income Crossover",
+    "description": "A long-term strategy that integrates technical and fundamental indicators to identify income-generating stocks with minimal risk. It uses moving averages and financial metrics to filter for consistency and undervaluation.",
+    "entry_rules": [
+      "Buy when the 50-day moving average crosses above the 200-day moving average indicating a bullish trend.",
+      "Ensure the stock has a dividend growth rate above the industry average.",
+      "Select companies with a dividend coverage ratio of at least 1.5."
+    ],
+    "exit_rules": [
+      "Exit if the 50-day moving average crosses below the 200-day moving average indicating a bearish trend.",
+      "Sell if the dividend growth rate drops below the industry average for two consecutive years.",
+      "Exit if dividend coverage falls below 1.2."
+    ],
+    "risk_management": {
+      "stop_loss": "Implement a gradual trailing stop loss starting at 12%, reducing exposure if the trend significantly reverses.",
+      "position_sizing": "Keep any individual stock position below 6% of the total portfolio."
+    },
+    "target_stocks": "High-quality dividend-paying companies with stable earnings and market leadership, suitable for conservative, long-term investors.",
+    "expected_behavior": "Designed to capitalize on long-term trends, offering steady returns in rising markets and protection through timely exits during downturns.",
+    "parameters": {
+      "ma_fast": {
+        "default": 50,
+        "min": 20,
+        "max": 100,
+        "step": 5
+      },
+      "ma_slow": {
+        "default": 200,
+        "min": 100,
+        "max": 300,
+        "step": 10
+      },
+      "div_growth_threshold": {
+        "default": 3,
+        "min": 1,
+        "max": 10,
+        "step": 0.5
+      },
+      "div_coverage_min": {
+        "default": 1.5,
+        "min": 1.2,
+        "max": 2.0,
+        "step": 0.1
+      },
+      "stop_loss_trailing_start": {
+        "default": 12,
+        "min": 5,
+        "max": 20,
+        "step": 1
+      },
+      "max_position_size": {
+        "default": 6,
+        "min": 2,
+        "max": 8,
+        "step": 0.5
+      }
+    },
+    "id": "8639a910-d48d-4f23-b770-0b2a550e52b0"
   }
 ]
