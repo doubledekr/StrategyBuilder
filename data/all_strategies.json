@@ -745,5 +745,377 @@
       }
     },
     "id": "8639a910-d48d-4f23-b770-0b2a550e52b0"
+  },
+  {
+    "strategy_name": "Volatility Breakout",
+    "description": "This strategy aims to capture explosive price movements in small-cap stocks by entering positions on significant breakouts above resistance levels.",
+    "entry_rules": [
+      "Enter a position when the stock price closes above the upper Bollinger Band.",
+      "The stock's Average True Range (ATR) is above its 20-day average to confirm high volatility.",
+      "Volume on the breakout day is at least 50% higher than the 50-day average volume."
+    ],
+    "exit_rules": [
+      "Close the position when the stock price closes back below the middle Bollinger Band.",
+      "Exit if the RSI (14) crosses below 70 indicating potential overbought conditions.",
+      "Close if the price falls by more than 5% from the entry point."
+    ],
+    "risk_management": "Set an initial stop loss at 3% below the entry point, and adjust the stop loss under significant support areas.",
+    "target_stocks": "Small-cap stocks with market capitalization under $2 billion and high daily volatility.",
+    "expected_behavior": "Expected to outperform in bullish and volatile markets, but may underperform during prolonged periods of low volatility or in a bearish trend.",
+    "parameters": {
+      "bollinger_period": {
+        "default": 20,
+        "min": 10,
+        "max": 50,
+        "step": 5
+      },
+      "bollinger_multiplier": {
+        "default": 2,
+        "min": 1.5,
+        "max": 3,
+        "step": 0.1
+      },
+      "atr_period": {
+        "default": 14,
+        "min": 5,
+        "max": 30,
+        "step": 1
+      },
+      "volume_threshold": {
+        "default": 1.5,
+        "min": 1,
+        "max": 3,
+        "step": 0.1
+      },
+      "rsi_period": {
+        "default": 14,
+        "min": 7,
+        "max": 21,
+        "step": 1
+      },
+      "rsi_overbought": {
+        "default": 70,
+        "min": 65,
+        "max": 80,
+        "step": 1
+      },
+      "initial_stop_loss_pct": {
+        "default": 3,
+        "min": 1,
+        "max": 10,
+        "step": 0.5
+      }
+    },
+    "id": "6d5331d2-4054-41fb-816c-d137dd665502"
+  },
+  {
+    "strategy_name": "Momentum Swing Trader",
+    "description": "Focuses on capturing medium-term trends in small-cap stocks by leveraging momentum indicators and moving averages.",
+    "entry_rules": [
+      "Enter a long position when the 10-day Moving Average (MA) crosses above the 50-day MA.",
+      "Confirm momentum with the MACD line crossing above the signal line.",
+      "The ADX (14) indicates a strong trend, being above 25."
+    ],
+    "exit_rules": [
+      "Exit when the 10-day MA crosses below the 50-day MA.",
+      "Close the position if the MACD line crosses below the signal line.",
+      "Take profit if the stock gains 15% from the entry price."
+    ],
+    "risk_management": "Position size is determined by dividing the capital risked by the distance from entry to a 4% stop loss level.",
+    "target_stocks": "High-volatility small-cap stocks likely to demonstrate clear momentum patterns.",
+    "expected_behavior": "Expected to perform well in trending markets but might incur whipsaws in choppy or sideways markets.",
+    "parameters": {
+      "ma_fast": {
+        "default": 10,
+        "min": 5,
+        "max": 20,
+        "step": 1
+      },
+      "ma_slow": {
+        "default": 50,
+        "min": 20,
+        "max": 100,
+        "step": 5
+      },
+      "macd_fast": {
+        "default": 12,
+        "min": 5,
+        "max": 26,
+        "step": 1
+      },
+      "macd_slow": {
+        "default": 26,
+        "min": 12,
+        "max": 50,
+        "step": 1
+      },
+      "macd_signal": {
+        "default": 9,
+        "min": 1,
+        "max": 18,
+        "step": 1
+      },
+      "adx_period": {
+        "default": 14,
+        "min": 7,
+        "max": 28,
+        "step": 1
+      },
+      "adx_threshold": {
+        "default": 25,
+        "min": 20,
+        "max": 40,
+        "step": 1
+      },
+      "profit_target_pct": {
+        "default": 15,
+        "min": 10,
+        "max": 30,
+        "step": 1
+      }
+    },
+    "id": "16d40068-a84f-4fe8-a085-367961c39b11"
+  },
+  {
+    "strategy_name": "Volume Spike Reversal",
+    "description": "This contrarian strategy seeks to exploit price reversals following large volume spikes, typically indicating exhaustion of a current trend in small-cap stocks.",
+    "entry_rules": [
+      "Enter long if a stock with a downtrend shows a hammer candle with volume 2x the 20-day average.",
+      "Confirm reversal potential with the Stochastic Oscillator dropping below 20 and then crossing above 20.",
+      "The previous price decline should be at least 10% over the past 5 days."
+    ],
+    "exit_rules": [
+      "Exit when the Stochastic Oscillator crosses above 70, indicating overbought status.",
+      "Close the position after a 10% gain from the entry point.",
+      "Sell if a bearish engulfing pattern appears on high volume."
+    ],
+    "risk_management": "Set a stop loss at the low of the hammer candle and adjust based on trailing stop methods when up 5%.",
+    "target_stocks": "Suitable for small-cap stocks experiencing high volatility and prevalent trends of sharp price declines.",
+    "expected_behavior": "Works best in volatile stocks with quick reversals but may underperform in strong one-directional trends.",
+    "parameters": {
+      "stochastic_period": {
+        "default": 14,
+        "min": 5,
+        "max": 21,
+        "step": 1
+      },
+      "stochastic_low_threshold": {
+        "default": 20,
+        "min": 10,
+        "max": 30,
+        "step": 1
+      },
+      "volume_spike_ratio": {
+        "default": 2,
+        "min": 1.5,
+        "max": 3,
+        "step": 0.1
+      },
+      "price_decline_pct": {
+        "default": 10,
+        "min": 5,
+        "max": 20,
+        "step": 1
+      },
+      "exit_gain_pct": {
+        "default": 10,
+        "min": 5,
+        "max": 20,
+        "step": 1
+      },
+      "stop_loss_buffer": {
+        "default": 0.5,
+        "min": 0.2,
+        "max": 2,
+        "step": 0.1
+      }
+    },
+    "id": "91c33e3c-028c-4ea4-a923-14617c72abb4"
+  },
+  {
+    "strategy_name": "Tech Momentum Surge",
+    "description": "This strategy capitalizes on momentum in tech stocks by entering positions during strong uptrends and minimizing exposure during pullbacks.",
+    "entry_rules": [
+      "Enter a long position when the 20-day moving average (MA) crosses above the 50-day MA and the Relative Strength Index (RSI) is below 70 and above 30.",
+      "Trade volume on the entry day must be at least 50% greater than the 20-day average volume.",
+      "The asset's price must be above its 200-day moving average."
+    ],
+    "exit_rules": [
+      "Exit the position when the 20-day MA crosses below the 50-day MA.",
+      "Sell if the RSI exceeds 80, indicating an overbought condition.",
+      "Close the position if the asset's price falls below the 200-day moving average."
+    ],
+    "risk_management": {
+      "stop_loss": "Set a stop loss at 7% below the entry price.",
+      "position_sizing": "Do not exceed 5% of the available capital per trade.",
+      "trailing_stop": "Implement a trailing stop of 5% to lock in profits."
+    },
+    "target_stocks": "Technology stocks with high beta and significant daily trading volumes.",
+    "expected_behavior": "Expected to perform well in strong trending markets with reduced drawdowns due to strict exit criteria. May underperform in choppy or sideways markets.",
+    "parameters": {
+      "ma_fast": {
+        "default": 20,
+        "min": 10,
+        "max": 50,
+        "step": 1
+      },
+      "ma_slow": {
+        "default": 50,
+        "min": 20,
+        "max": 200,
+        "step": 5
+      },
+      "rsi_buy": {
+        "default": 30,
+        "min": 10,
+        "max": 50,
+        "step": 5
+      },
+      "rsi_sell": {
+        "default": 70,
+        "min": 60,
+        "max": 90,
+        "step": 5
+      },
+      "rsi_overbought": {
+        "default": 80,
+        "min": 70,
+        "max": 100,
+        "step": 5
+      },
+      "stop_loss_percent": {
+        "default": 7,
+        "min": 3,
+        "max": 20,
+        "step": 1
+      },
+      "trailing_stop_percent": {
+        "default": 5,
+        "min": 1,
+        "max": 10,
+        "step": 0.5
+      }
+    },
+    "id": "d501f110-8721-4ce9-9c7e-832a3c8c9e36"
+  },
+  {
+    "strategy_name": "Breakout Navigator",
+    "description": "This strategy aims to capture price breakouts in the tech sector by identifying high-probability momentum shifts, optimizing growth while managing potential drawdowns effectively.",
+    "entry_rules": [
+      "Enter a long position when the stock breaks above its 14-day high and the Average True Range (ATR) is rising.",
+      "RSI on a 14-day basis should be above 50, indicating momentum.",
+      "Confirm breakout with a 10% increase in volume over the 30-day average."
+    ],
+    "exit_rules": [
+      "Exit the position when the stock closes back below the 14-day high.",
+      "Sell if closing price is lower than 2% below the breakout level.",
+      "Liquidate on an adverse signal where RSI falls below 40."
+    ],
+    "risk_management": {
+      "stop_loss": "Set a hard stop loss 5% below the breakout level.",
+      "position_sizing": "Limit each trading position to 4% of the trading portfolio.",
+      "profit_target": "Consider booking profits at a 10% gain from the entry point."
+    },
+    "target_stocks": "Fast-growing tech stocks showing clear breakout potential.",
+    "expected_behavior": "Designed to perform well during times of trend continuation and breakouts, while minimizing losses during false breakouts.",
+    "parameters": {
+      "breakout_length": {
+        "default": 14,
+        "min": 10,
+        "max": 30,
+        "step": 1
+      },
+      "rsi_buy_threshold": {
+        "default": 50,
+        "min": 30,
+        "max": 70,
+        "step": 5
+      },
+      "rsi_exit_threshold": {
+        "default": 40,
+        "min": 20,
+        "max": 50,
+        "step": 5
+      },
+      "atr_days": {
+        "default": 14,
+        "min": 5,
+        "max": 20,
+        "step": 1
+      },
+      "stop_loss_percent": {
+        "default": 5,
+        "min": 3,
+        "max": 15,
+        "step": 1
+      },
+      "profit_target_percent": {
+        "default": 10,
+        "min": 5,
+        "max": 25,
+        "step": 1
+      }
+    },
+    "id": "f861003a-e7e2-479f-8db7-9568af3a8ebd"
+  },
+  {
+    "strategy_name": "Momentum Compression",
+    "description": "This strategy focuses on identifying low volatility periods in tech stocks followed by momentum-driven breakouts, aiming to minimize losses through precise entry and exit points.",
+    "entry_rules": [
+      "Enter a long position when Bollinger Bands width is at its 20-day low and the price breaks above the upper band.",
+      "Ensure RSI reading is above 55 confirming momentum.",
+      "Volume should be twice the daily volume average upon break."
+    ],
+    "exit_rules": [
+      "Exit when the candle closes below the 20-period moving average.",
+      "Liquidate if RSI falls below 45 after entry, showing momentum loss.",
+      "Close the trade if Bollinger Bands width falls below initial entry width post-breakout."
+    ],
+    "risk_management": {
+      "stop_loss": "Set a stop loss at 6% below the initial entry price.",
+      "position_sizing": "Allocate no more than 6% of total capital per trade to control exposure.",
+      "risk/reward_ratio": "Aim for a 2:1 risk to reward ratio on trades."
+    },
+    "target_stocks": "Technologically advanced stocks experiencing low volatility phases with high breakout potential.",
+    "expected_behavior": "Optimized for volatile breakouts and performance in trending markets, but may suffer during prolonged low volatility conditions.",
+    "parameters": {
+      "bb_period": {
+        "default": 20,
+        "min": 10,
+        "max": 50,
+        "step": 1
+      },
+      "bb_width_trigger": {
+        "default": 1.0,
+        "min": 0.5,
+        "max": 2.0,
+        "step": 0.1
+      },
+      "rsi_entry_threshold": {
+        "default": 55,
+        "min": 40,
+        "max": 60,
+        "step": 1
+      },
+      "rsi_exit_threshold": {
+        "default": 45,
+        "min": 30,
+        "max": 50,
+        "step": 1
+      },
+      "stop_loss_percent": {
+        "default": 6,
+        "min": 3,
+        "max": 12,
+        "step": 1
+      },
+      "max_position_size": {
+        "default": 6,
+        "min": 1,
+        "max": 10,
+        "step": 1
+      }
+    },
+    "id": "1ad9888c-6c3e-4d07-81db-75faa53ff718"
   }
 ]
